@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rover</title>
+</head>
+<body onload="Start()" style="background-image: url('concrete-road.jpg'); background-size: cover; text-align: center; font-family: sans-serif; color: white;">
+    <h1>Valet Parking</h1>
+    <p>NOTE: You have to make the X and Y Values to 165X, 35Y</p>
+    <p id='COORDS'>X = 15, Y = 85</p>
+    <canvas id="marsSurface" style="background-image: url('https://mahdihat791.github.io/v2/ADV-C84.com/nasa_image_1.jpg'); height:700px; width:1000px;">
+    </canvas>
+    <script>
+        var rover = "car2.png";
+        var bgsrc = "parkingLot.jpg"
+        marsSurface = document.getElementById("marsSurface");
+        ctx = marsSurface.getContext("2d");
+        scoop = new Audio("sample2.mp3");
+        move = new Audio("move.mp3")
+        chirp_chirp = new Audio("chirp.mp3")
+        var x = 15;
+        var y = 85;
+
+        function Start() {
+            bgImage = new Image();
+            bgImage.onload = uploadIMG;
+            bgImage.src = bgsrc;
+
+            roverImage = new Image();
+            roverImage.onload = uploadRover;
+            roverImage.src = rover;
+        }
+        
+        function uploadIMG() {
+            ctx.drawImage(bgImage, 0, 0, marsSurface.width, marsSurface.height);
+        }
+
+        function uploadRover() {
+            ctx.drawImage(roverImage, x, y, 25, 30);
+            console.log(x + ", " + y);
+            document.getElementById("COORDS").innerHTML = x + ", " + y;
+            if ((x == 165 && y == 35)) {
+                chirp_chirp.play();
+            }
+        }
+        
+        window.addEventListener("keydown", keydown);
+
+        function keydown(e) {
+            keyValue = e.keyCode;
+            
+
+            if(keyValue == 39) {
+                console.log("Right");
+                x += 10;
+                uploadIMG()
+                uploadRover()
+                
+            }
+            if(keyValue == 37) {
+                console.log("Left");
+                x -= 10;
+                uploadIMG()
+                uploadRover()
+                
+            }
+            if(keyValue == 38) {
+                console.log("Up");
+                y -= 10;
+                uploadIMG()
+                uploadRover()
+                
+                
+            }
+            if(keyValue == 40) {
+                console.log("Down");
+                y += 10;
+                uploadIMG()
+                uploadRover()
+            }
+            if(keyValue == 13) {
+                chirp_chirp.play()
+            } 
+        }
+
+        
+    </script>
+</body>
+</html>
